@@ -16,3 +16,5 @@ def main():
 
     cur.close()
     conn.close()
+
+main()
