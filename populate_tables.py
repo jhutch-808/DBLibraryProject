@@ -11,22 +11,46 @@ def main():
     # Open a cursor to perform database operations
     cur = conn.cursor(row_factory=dict_row)
 
-    cur.execute("DELETE FROM courses")
-    cur.execute("DELETE FROM students")
-    cur.execute("DELETE FROM enroll")
+    #cur.execute("DELETE FROM Author")
+    #cur.execute("DELETE FROM Books")
+    #cur.execute("DELETE FROM Checkout")
+    #cur.execute("DELETE FROM Creditcards")
+    #cur.execute("DELETE FROM Patron")
+    #cur.execute("DELETE FROM Ratings")
+    #cur.execute("DELETE FROM Staff")
 
-    with open("courses.csv", 'r') as file:
-         with cur.copy(f"COPY courses FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
+    with open("Author.csv", 'r') as file:
+         with cur.copy(f"COPY Author FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
             copy.write(file.read())
     conn.commit()
 
-    with open("students.csv", 'r') as file:
-        with cur.copy(f"COPY students FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
+    with open("Books.csv", 'r') as file:
+        with cur.copy(f"COPY Book FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
             copy.write(file.read())
     conn.commit()
 
-    with open("enroll.csv", 'r') as file:
-        with cur.copy(f"COPY enroll FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
+    with open("Checkout.csv", 'r') as file:
+        with cur.copy(f"COPY Checkout FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
+            copy.write(file.read())
+    conn.commit()
+
+    with open("Creditcards.csv", 'r') as file:
+        with cur.copy(f"COPY Creditcard FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
+            copy.write(file.read())
+    conn.commit()
+
+    with open("Patron.csv", 'r') as file:
+        with cur.copy(f"COPY Patron FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
+            copy.write(file.read())
+    conn.commit()
+
+    with open("Ratings.csv", 'r') as file:
+        with cur.copy(f"COPY Rating FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
+            copy.write(file.read())
+    conn.commit()
+
+    with open("Staff.csv", 'r') as file:
+        with cur.copy(f"COPY Staff FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
             copy.write(file.read())
     conn.commit()
 

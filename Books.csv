@@ -1,0 +1,69 @@
+ISBN,Title,Genre,AuthorID,Status,Publisher, Pub_date
+101,Harry Potter and the Sorcerer's Stone,Fantasy,101,TRUE,Scholastic,9/1/1997
+102,A Game of Thrones,Fantasy,102,TRUE,Bantam Books,8/6/1996
+103,The Great Gatsby,Classics,109,TRUE,Scribner,4/10/1925
+104,War and Peace,Historical Fiction,122,TRUE,The Russian Messenger,1869-01-01
+105,The Hobbit,Fantasy,105,TRUE,HarperCollins,9/21/1937
+106,1984,Dystopian,133,TRUE,Secker & Warburg,6/8/1949
+107,The Hunger Games,Science Fiction,101,TRUE,Scholastic,9/14/2008
+108,The Catcher in the Rye,Classics,123,TRUE,Little Brown and Company,7/16/1951
+109,The Da Vinci Code,Mystery,116,TRUE,Doubleday,3/18/2003
+110,The Fellowship of the Ring,Fantasy,105,TRUE,Allen & Unwin,7/29/1954
+111,To Kill a Mockingbird,Drama,110,TRUE,J.B. Lippincott & Co.,7/11/1960
+112,The Road,Post-apocalyptic,126,TRUE,Alfred A. Knopf,9/26/2006
+113,The Secret History,Mystery,129,TRUE,Alfred A. Knopf,9/12/1992
+115,Where the Crawdads Sing,Thriller,132,TRUE,Putnam,8/14/2018
+116,The Martian,Science Fiction,151,TRUE,Random House,2/27/2011
+117,The Goldfinch,Drama,134,TRUE,LittleBrown and Company,9/23/2013
+118,Big Little Lies,Drama,131,TRUE,Flatiron Books,7/29/2014
+119,The Book Thief,Historical Fiction,118,TRUE,Picador,9/1/2005
+120,The Shining,Horror,103,TRUE,Scribner,1/28/1977
+121,The Fault in Our Stars,Romance,121,TRUE,Walker Books,1/10/2012
+122,Looking for Alaska,Young Adult,121,TRUE,Dutton Books,3/3/2005
+123,The Alchemist,Fiction,117,TRUE,HarperCollins,11/1/1988
+124,Brave New World,Dystopian,134,TRUE,Secker & Warburg,8/1/1932
+125,The Girl on the Train,Thriller,116,TRUE,HarperCollins,1/13/2015
+126,The Help,Historical Fiction,130,TRUE,Putnam,2/10/2009
+127,The Night Circus,Fantasy,101,TRUE,Knopf,9/13/2011
+128,Becoming,Biography,147,TRUE,Crown Publishing Group,11/13/2018
+129,The Outsiders,Young Adult,108,TRUE,SEAL Press,4/24/1967
+130,Slaughterhouse-Five,Science Fiction,136,TRUE,Ballantine Books,3/31/1969
+131,Harry Potter and the Half-Blood Prince,Fantasy,101,TRUE,Scholastic,7/16/2005
+132,The Time Traveler's Wife,Romance,130,TRUE,Atria Books,1/1/2003
+133,Educated: A Memoir,Non-fiction,149,TRUE,Random House,2/20/2018
+134,The Silent Patient,Thriller,131,TRUE,Celadon Books,2/5/2019
+135,The Nightingale,Historical Fiction,130,TRUE,St. Martin's Press,2/3/2015
+136,All the Light We Cannot See,Historical Fiction,138,TRUE,Random House,5/6/2014
+137,The Picture of Dorian Gray,Classics,148,TRUE,Oxford University Press,1890-06-01
+138,The Giver,Young Adult,141,TRUE,Delacorte Press,4/26/1993
+139,The Immortalists,Historical Fiction,150,TRUE,Spiegel & Grau,1/9/2018
+140,The Couple Next Door,Thriller,131,TRUE,Berkley,6/14/2016
+141,The Perks of Being a Wallflower,Young Adult,152,TRUE,MTV Books,2/1/1999
+142,The Catcher in the Rye,Classics,123,TRUE,LittleBrown and Company,7/16/1951
+143,The Silent Patient,Thriller,131,TRUE,Celadon Books,2/5/2019
+144,The Night Manager,Thriller,158,TRUE,Little Brown and Company,11/1/1993
+145,Shutter Island,Thriller,159,TRUE,Random House,3/1/2003
+146,The Girl with the Dragon Tattoo,Mystery,160,TRUE,Knopf,9/1/2005
+147,The Road,Post-apocalyptic,126,TRUE,Alfred A. Knopf,9/26/2006
+148,Fifty Shades of Grey,Romance,161,TRUE,Vintage Books,6/20/2009
+149,Gone with the Wind,Historical Fiction,162,TRUE,Macmillan,6/30/1936
+150,The Wind-Up Bird Chronicle,Fiction,163,TRUE,Alfred A. Knopf,5/14/1994
+151,The Shining,Horror,103,TRUE,Scribner,1/28/1977
+152,The Girl on the Train,Thriller,116,TRUE,HarperCollins,1/13/2015
+153,Big Little Lies,Drama,131,TRUE,Flatiron Books,7/29/2014
+154,The Underground Railroad,Historical Fiction,160,TRUE,Random House,8/2/2016
+155,The Martian,Science Fiction,151,TRUE,Random House,2/27/2011
+156,The Help,Historical Fiction,130,TRUE,Putnam,2/10/2009
+157,The Secret History,Mystery,129,TRUE,Alfred A. Knopf,9/12/1992
+158,The Night Circus,Fantasy,101,TRUE,Knopf,9/13/2011
+159,The Perks of Being a Wallflower,Young Adult,152,TRUE,MTV Books,2/1/1999
+160,The Fault in Our Stars,Romance,121,TRUE,Walker Books,1/10/2012
+161,Looking for Alaska,Young Adult,121,TRUE,Dutton Books,3/3/2005
+162,The Alchemist,Fiction,117,TRUE,HarperCollins,11/1/1988
+163,Brave New World,Dystopian,134,TRUE,Secker & Warburg,8/1/1932
+164,The Book Thief,Historical Fiction,118,TRUE,Picador,9/1/2005
+165,The Girl with the Louding Voice,Fiction,161,TRUE,The Other Press,2/4/2020
+166,The Rosie Project,Romance,163,TRUE,Simon & Schuster,4/1/2013
+167,The Ocean at the End of the Lane,Fiction,164,TRUE,William Morrow,6/18/2013
+168,The Silent Patient,Thriller,131,TRUE,Celadon Books,2/5/2019
+169,The Martian,Science Fiction,151,TRUE,Random House,2/27/2011
