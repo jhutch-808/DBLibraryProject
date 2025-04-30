@@ -1,4 +1,5 @@
 # Script to let us navigate a library database and interact with it.
+from contextlib import nullcontext
 
 import psycopg
 from psycopg.rows import dict_row
@@ -63,6 +64,10 @@ def get_password_for_staff(user_id):
     row = cur.fetchone()
     return str(row['cellnum'])  # return as a string to simulate a password
 
+def get_book_with_title(title):
+    cur.execute("SELECT b.title, a.first_Name, a.last_Name, b.ISBN, b.genre, b.status From Book b natural join Author a where b.title = 'The Great Gatsby' order by b.title")
+    rows = cur.fetchall()
+    return rows
 
 @ui.page('/')
 def homepage():
@@ -166,22 +171,22 @@ def staff_dashboard():
 def book_lookup():
     ui.label("Search for books! 📚")
     with ui.row():
-        title = ui.input('Book title')
-        author = ui.input('Book author')
-        isbn = ui.input('ISBN')
+        title_box = ui.input('Book title')
+        title_name = title_box.value
+        print(title_name)
+        #author = ui.input('Book author')
+        #isbn = ui.input('ISBN')
 
         ui.button('Search', on_click=lambda:search())
 
+
         def search():
             ui.label("Results:")
-            cur.execute("""
-                    SELECT Title, Author, ISBN, Genre, Status
-                    FROM Book
-                    WHERE Title = %s or ISBN = %s or Author = %s
-                    ORDER BY Title
-                    """, [title], [isbn], [author])
-            rows = cur.fetchall()
-            print(rows)
+            #if title:
+            print("here")
+            book_rows = get_book_with_title(title_box.value)
+            print(book_rows)
+
 
 
 ui.run(reload=False, storage_secret='THIS_NEEDS_TO_BE_CHANGED', port = 8081)
