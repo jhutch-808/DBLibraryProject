@@ -1,58 +1,44 @@
 First_Name,Last_Name,Publisher,AuthorID
-Jane,Twain,Scholastic,101
-Jane,Tolkien,Bantam Books,102
-Stephen,Austen,Scribner,109
-Ernest,Rowling,The Russian Messenger,122
-George,Tolkien,HarperCollins,105
-Mark,King,Secker & Warburg,133
-J.R.R.,Christie,Little Brown and Company,123
-Jane,Rowling,Doubleday,116
-Agatha,Rowling,Allen & Unwin,105
-Leo,Tolkien,J.B. Lippincott & Co.,110
-J.K.,Twain,Alfred A. Knopf,126
-Jane,Christie,Alfred A. Knopf,129
-Leo,Rowling,Putnam,132
-George,Martin,Random House,151
-Jane,Rowling,LittleBrown and Company,134
-J.K.,King,Flatiron Books,131
-George,Hemingway,Picador,118
-George,Martin,Scribner,103
-Agatha,Rowling,Walker Books,121
-J.K.,King,Dutton Books,121
-F. Scott,Fitzgerald,HarperCollins,117
-J.R.R.,Austen,Secker & Warburg,134
-Mark,Martin,HarperCollins,116
-J.K.,Rowling,Putnam,130
-Agatha,Tolstoy,Knopf,101
-George,Rowling,Crown Publishing Group,147
-Jane,Hemingway,SEAL Press,108
-F. Scott,Twain,Ballantine Books,136
-F. Scott,Fitzgerald,Atria Books,130
-Jane,Fitzgerald,Random House,149
-Stephen,Tolstoy,Celadon Books,131
-Jane,Twain,St. Martin's Press,130
-Stephen,Rowling,Random House,138
-Ernest,Hemingway,Oxford University Press,148
-Ernest,Tolstoy,Delacorte Press,141
-George,Hemingway,Spiegel & Grau,150
-J.K.,Austen,Berkley,131
-Agatha,Martin,MTV Books,152
-Ernest,Martin,LittleBrown and Company,123
-Stephen,King,Little Brown and Company,158
-F. Scott,Tolkien,Random House,159
-F. Scott,Martin,Knopf,160
-Ernest,Tolstoy,Vintage Books,161
-Agatha,King,Macmillan,162
-J.K.,King,Alfred A. Knopf,163
-Leo,Twain,Random House,160
-Agatha,Twain,The Other Press,161
-Mark,King,Simon & Schuster,163
-Ernest,Hemingway,William Morrow,164
-Jane,Tolkien,Putnam,160
-Jane,Fitzgerald,G.P. Putnam's Sons,165
-J.K.,Austen,HarperCollins,168
-George,Rowling,MLB Books,160
-Leo,Rowling,Flatiron Books,184
-Stephen,Rowling,HarperCollins,185
-Jane,Fitzgerald,HarperCollins,186
-J.R.R.,Rowling,HarperCollins,187
+Suzanne,Collins,Scholastic,100
+J.K.,Rowling,Scholastic,101
+George,Martin,Bantam Books,102
+F.Scott,Fitzgerald,Scribner,109
+Leo,Tolstoy,The Russian Messenger,122
+J.R.R.,Tolkien,HarperCollins,105
+George,Orwell,Secker & Warburg,133
+Dan,Brown,Doubleday,116
+Harper,Lee,J.B. Lippincott & Co.,110
+Cormac,McCarthy,Alfred A. Knopf,126
+Donna,Tartt,Alfred A. Knopf,129
+Delia,Owens,Putnam,132
+Andy,Weir,Random House,151
+Donna,Tartt,LittleBrown and Company,134
+Liana,Moriarty,Flatiron Books,131
+Markus,Zusak,Picador,118
+Stephen,King,Scribner,103
+John,Green,Walker Books,121
+Paulo,Coelho,HarperCollins,117
+Kathryn,Stockett,Putnam,130
+Michelle,Obama,Crown Publishing Group,147
+S.E.,Hinton,SEAL Press,108
+Kurt,Vonnegut,Ballantine Books,136
+Tara,Westover,Random House,149
+Anothy,Doerr,Random House,138
+Oscar,Wilde,Oxford University Press,148
+Lois,Lowry,Delacorte Press,141
+Chloe,Benjamin,Spiegel & Grau,150
+Stephen,Chbosky,MTV Books,152
+J.D.,Salinger,LittleBrown and Company,123
+John,Carre,Little Brown and Company,158
+Dennis,Lehane,Random House,159
+Stieg,Larsson,Knopf,160
+E.L.,James,Vintage Books,161
+Margaret,Mitchell,Macmillan,162
+Haruki,Murakami,Alfred A. Knopf,163
+Neil,Gaiman,William Morrow,164
+Mario,Puzo,G.P. Putnam's Sons,165
+Heather,Morris,HarperCollins,168
+Jeanine,Cummins,Flatiron Books,184
+Edna,O'Brien,HarperCollins,185
+Liv,Constantine,HarperCollins,186
+Lisa,Jewell,HarperCollins,187

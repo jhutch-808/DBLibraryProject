@@ -5,7 +5,7 @@ ISBN,Title,Genre,AuthorID,Status,Publisher, Pub_date
 104,War and Peace,Historical Fiction,122,TRUE,The Russian Messenger,1869-01-01
 105,The Hobbit,Fantasy,105,TRUE,HarperCollins,9/21/1937
 106,1984,Dystopian,133,TRUE,Secker & Warburg,6/8/1949
-107,The Hunger Games,Science Fiction,101,TRUE,Scholastic,9/14/2008
+100,The Hunger Games,Science Fiction,100,TRUE,Scholastic,9/14/2008
 108,The Catcher in the Rye,Classics,123,TRUE,Little Brown and Company,7/16/1951
 109,The Da Vinci Code,Mystery,116,TRUE,Doubleday,3/18/2003
 110,The Fellowship of the Ring,Fantasy,105,TRUE,Allen & Unwin,7/29/1954

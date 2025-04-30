@@ -12,8 +12,18 @@ conn = psycopg.connect(f"host=dbclass.rhodescs.org dbname=practice user={DBUSER}
 # Open a cursor to perform database operations
 cur = conn.cursor(row_factory=dict_row)
 
+global user_id
+
 def get_author():
     cur.execute("SELECT First_Name,Last_Name,Publisher,AuthorID FROM Author")
+    rows = cur.fetchall()
+    return rows
+
+def get_status(selected_book):
+    cur.execute("SELECT status FROM book WHERE isbn=%s", (selected_book,))
+
+def get_book_and_author():
+    cur.execute("SELECT title, first_name, last_name, isbn, genre, status FROM Book b join Author a on a.AuthorID=b.AuthorID")
     rows = cur.fetchall()
     return rows
 
@@ -65,7 +75,28 @@ def get_password_for_staff(user_id):
     return str(row['cellnum'])  # return as a string to simulate a password
 
 def get_book_with_title(title):
-    cur.execute("SELECT b.title, a.first_Name, a.last_Name, b.ISBN, b.genre, b.status From Book b natural join Author a where b.title = 'The Great Gatsby' order by b.title")
+    cur.execute("SELECT b.title, a.first_Name, a.last_Name, b.ISBN, b.genre, b.status From Book b join Author a on a.AuthorID = b.AuthorID where b.title = %s", [title])
+    rows = cur.fetchall()
+    return rows
+
+def get_book_with_author(author):
+    cur.execute("SELECT b.title, a.first_Name, a.last_Name, b.ISBN, b.genre, b.status From Book b join Author a on a.AuthorID = b.AuthorID where a.last_name = %s", [author])
+    rows = cur.fetchall()
+    return rows
+
+def get_book_with_isbn(isbn):
+    cur.execute("SELECT b.title, a.first_Name, a.last_Name, b.ISBN, b.genre, b.status From Book b join Author a on a.AuthorID = b.AuthorID where b.isbn = %s", [isbn])
+    rows = cur.fetchall()
+    return rows
+
+def get_user_checkouts(user_id):
+    cur.execute("""
+            SELECT b.ISBN, b.Title, c.DayOut, c.DayDue, c.DayReturned
+            FROM Checkout c
+            JOIN Book b ON c.ISBN = b.ISBN
+            WHERE c.Lib_ID = %s
+            ORDER BY c.DayDue
+        """, [user_id])
     rows = cur.fetchall()
     return rows
 
@@ -132,14 +163,7 @@ def patron_dashboard():
     # Current Books Checked Out or On Hold
     ui.label("📚 Your Books (Checked Out or On Hold)").classes('text-lg mt-4')
 
-    cur.execute("""
-        SELECT b.ISBN, b.Title, c.DayOut, c.DayDue, c.DayReturned
-        FROM Checkout c
-        JOIN Book b ON c.ISBN = b.ISBN
-        WHERE c.Lib_ID = %s
-        ORDER BY c.DayDue
-    """, [user_id])
-    rows = cur.fetchall()
+    rows = get_user_checkouts(user_id)
 
     if rows:
         ui.table(columns=[
@@ -169,23 +193,87 @@ def staff_dashboard():
 
 @ui.page('/lookup')
 def book_lookup():
-    ui.label("Search for books! 📚")
+    selected_book = None
+    ui.label("Search for books! 📚 Please fill out one of the fields below.")
     with ui.row():
-        title_box = ui.input('Book title')
-        title_name = title_box.value
-        print(title_name)
+        title=None
+        author=None
+        isbn=None
+        title = ui.input(label = 'Title: ', placeholder='Type a book title')
+        author = ui.input(label='Author last: ', placeholder='Type an author last name')
+        isbn = ui.input(label='ISBN: ', placeholder='Type an isbn number')
+        #print(title.value)
         #author = ui.input('Book author')
         #isbn = ui.input('ISBN')
 
         ui.button('Search', on_click=lambda:search())
+        ui.button('View All', on_click=lambda: view_all())
+
+        ui.separator()
+
+        #ui.label().bind_text_from(title, 'value')
+
+        search_results = ui.table(columns=[{'name': 'title', 'field': 'title', 'label': "Title"},
+                                           {'name': 'first_name', 'field': 'first_name', 'label': "Author First"},
+                                           {'name': 'last_name', 'field': 'last_name', 'label': "Author Last"},
+                                           {'name': 'isbn', 'field': 'isbn', 'label': "ISBN"},
+                                           {'name': 'genre', 'field': 'genre', 'label': "Genre"},
+                                           {'name': 'status', 'field': 'status', 'label': "Status"}],
+                                  rows=[], selection='single', on_select=lambda e: click_book(e))
+        ui.button('Hold or checkout book', on_click=lambda: hold_and_checkout_book(selected_book))
+        ui.button('Additional info', on_click=lambda: info_book(selected_book))
 
 
         def search():
             ui.label("Results:")
-            #if title:
-            print("here")
-            book_rows = get_book_with_title(title_box.value)
-            print(book_rows)
+            if title.value:
+                book_rows = get_book_with_title(title.value)
+
+            if author.value:
+                book_rows = get_book_with_author(author.value)
+
+            if isbn.value:
+                book_rows = get_book_with_isbn(int(isbn.value))
+
+            search_results.add_rows(book_rows)
+            search_results.update()
+
+
+        def view_all():
+            search_results.add_rows(get_book_and_author())
+            search_results.update()
+
+        def click_book(e):
+            nonlocal selected_book
+            selected_book = int(e.selection[0]['isbn'])
+
+def hold_and_checkout_book(selected_book):
+    dayOut='2025-05-01'
+    dayDue='2025-06-01'
+    dayReturned=None
+    if get_status(selected_book):
+        cur.execute("INSERT INTO Checkout(ISBN,Lib_ID,DayOut,DayDue,DayReturned) VALUES (%d, %d, %s, %s, %s)", [selected_book, user_id, dayOut, dayDue, dayReturned])
+        conn.commit()
+    if not get_status(selected_book):
+        cur.execute("INSERT INTO Hold(isbn,dayheld,dayholdexpire,dayout,Lib_ID) VALUES (%d, %d, %s, %s, %s)",
+                    [selected_book, dayOut, dayDue, dayReturned, user_id])
+        conn.commit()
+    patron_dashboard()
+
+def info_book(selected_book):
+    rows = cur.execute("SELECT * FROM Author a join Book b on a.AuthorID=b.AuthourID")
+    all_book_info = ui.table(columns=[{'name': 'isbn', 'field': 'isbn', 'label': "ISBN"},
+                                       {'name': 'title', 'field': 'title', 'label': "Title"},
+                                       {'name': 'genre', 'field': 'genre', 'label': "Genre"},
+                                       {'name': 'status', 'field': 'status', 'label': "Status"},
+                                       {'name': 'publisher', 'field': 'publisher', 'label': "Publisher"},
+                                       {'name': 'pub_date', 'field': 'pub_date', 'label': "Date Published"},
+                                       {'name': 'first_name', 'field': 'first_name', 'label': "Author first"},
+                                       {'name': 'last_name', 'field': 'last_name', 'label': "Author last"},
+                                       {'name': 'isbn', 'field': 'isbn', 'label': "ISBN"},
+                                       ], rows=[])
+    all_book_info.add_rows(rows)
+    all_book_info.update()
 
 
 

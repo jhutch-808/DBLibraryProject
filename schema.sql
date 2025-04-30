@@ -12,8 +12,8 @@ CREATE TABLE Book(
     AuthorID int,
 	Status boolean,
 	Publisher varchar(50),
-	Pub_date timestamp, 
-    FOREIGN KEY (AuthorID) References Author(AuthorID)
+	Pub_date timestamp,
+    FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID),
 );
 
 

@@ -10,25 +10,24 @@ def main():
 
     # Open a cursor to perform database operations
     cur = conn.cursor(row_factory=dict_row)
-
-    cur.execute("DELETE FROM Author")
     #cur.execute("DELETE FROM Books")
+    #cur.execute("DELETE FROM Author")
     #cur.execute("DELETE FROM Checkout")
     #cur.execute("DELETE FROM Creditcards")
     #cur.execute("DELETE FROM Patron")
     #cur.execute("DELETE FROM Ratings")
     #cur.execute("DELETE FROM Staff")
 
-    #with open("Author.csv", 'r') as file:
-    #     with cur.copy(f"COPY Author FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
-    #        copy.write(file.read())
-    #conn.commit()
-#
-    #with open("Books.csv", 'r') as file:
-    #    with cur.copy(f"COPY Book FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
-    #        copy.write(file.read())
-    #conn.commit()
-#
+    with open("Books.csv", 'r') as file:
+        with cur.copy(f"COPY Book FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
+            copy.write(file.read())
+    conn.commit()
+
+    with open("Author.csv", 'r') as file:
+        with cur.copy(f"COPY Author FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
+            copy.write(file.read())
+    conn.commit()
+
     #with open("Checkout.csv", 'r') as file:
     #    with cur.copy(f"COPY Checkout FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
     #        copy.write(file.read())
@@ -59,10 +58,5 @@ def main():
 #        with cur.copy(f"COPY Staff FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
 #            copy.write(file.read())
 #    conn.commit()
-
-    with open("Correct_Author.csv", 'r') as file:
-        with cur.copy(f"COPY Correct_Author FROM STDIN WITH (FORMAT CSV, HEADER true)") as copy:
-            copy.write(file.read())
-    conn.commit()
 
 main()
