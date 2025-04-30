@@ -162,7 +162,32 @@ def staff_dashboard():
 
     ui.image('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNNoYnKJ1nuDOlFNvrEzVbS1f6AndwMK--Yg&s')
 
+@ui.page('/lookup')
+def book_lookup():
+    ui.label("Search for books! 📚")
+    with ui.row():
+        title = ui.input('Book title')
+        author = ui.input('Book author')
+        isbn = ui.input('ISBN')
 
+        ui.button('Search', on_click=lambda:search())
+
+        def search():
+            ui.label("Results:")
+            cur.execute("""
+                    SELECT Title, Author, ISBN, Genre, Status
+                    FROM Book
+                    WHERE Title = %s or ISBN = %s or Author = %s
+                    ORDER BY Title
+                    """, [title], [isbn], [author])
+            rows = cur.fetchall()
+            print(rows)
 
 
 ui.run(reload=False, storage_secret='THIS_NEEDS_TO_BE_CHANGED', port = 8081)
+
+
+
+
+
+
