@@ -279,9 +279,6 @@ def hold_and_checkout_book(selected_book, user_id):
     #if get_status(selected_book):
     cur.execute("INSERT INTO Checkout(ISBN,Lib_ID,DayOut,DayDue,DayReturned) VALUES (%s, %s, %s, %s, %s)", [selected_book, user_id, dayOut, dayDue, dayReturned])
     conn.commit()
-
-    cur.execute("SELECT title, isbn, genre, status FROM Book b join Author a on a.AuthorID=b.AuthorID")
-    rows = cur.fetchall()
     #if not get_status(selected_book):
         #cur.execute("INSERT INTO Hold(isbn,dayheld,dayholdexpire,dayout,Lib_ID) VALUES (%s, %s, %s, %s, %s)",
                     #[selected_book, dayOut, dayDue, dayReturned, user_id])
