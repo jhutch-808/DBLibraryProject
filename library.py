@@ -53,7 +53,7 @@ def get_name(lib_id):
     return row
 
 def get_ratings(isbn):
-    cur.execute("SELECT ISBN,Lib_ID,Rating,Review_text FROM Ratings WHERE isbn=%s", [isbn])
+    cur.execute("SELECT ISBN,Lib_ID,Rating,Review_text FROM Rating WHERE isbn=%s", [isbn])
     rows = cur.fetchall()
     return rows
 
@@ -242,6 +242,7 @@ def book_lookup():
                                            {'name': 'genre', 'field': 'genre', 'label': "Genre"},
                                            {'name': 'status', 'field': 'status', 'label': "Status"}],
                                   rows=[], selection='single', row_key='isbn', on_select=lambda e: click_book(e))
+        ui.separator()
         ui.button('Hold or checkout book', on_click=lambda: hold_and_checkout_book(selected_book, user_id))
         ui.link('Additional info', '/info_book')
 
@@ -278,6 +279,9 @@ def hold_and_checkout_book(selected_book, user_id):
     #if get_status(selected_book):
     cur.execute("INSERT INTO Checkout(ISBN,Lib_ID,DayOut,DayDue,DayReturned) VALUES (%s, %s, %s, %s, %s)", [selected_book, user_id, dayOut, dayDue, dayReturned])
     conn.commit()
+
+    cur.execute("SELECT title, isbn, genre, status FROM Book b join Author a on a.AuthorID=b.AuthorID")
+    rows = cur.fetchall()
     #if not get_status(selected_book):
         #cur.execute("INSERT INTO Hold(isbn,dayheld,dayholdexpire,dayout,Lib_ID) VALUES (%s, %s, %s, %s, %s)",
                     #[selected_book, dayOut, dayDue, dayReturned, user_id])
@@ -289,7 +293,7 @@ def info_book():
     selected_book = app.storage.user.get('selected_book')
     print(selected_book)
     rows = cur.execute("SELECT * FROM Author a join Book b on a.AuthorID=b.AuthorID WHERE isbn = %s", [selected_book])
-    all_book_info = ui.table(columns=[{'name': 'isbn', 'field': 'isbn', 'label': "ISBN"},
+    all_book_info=ui.table(columns=[{'name': 'isbn', 'field': 'isbn', 'label': "ISBN"},
                                        {'name': 'title', 'field': 'title', 'label': "Title"},
                                        {'name': 'genre', 'field': 'genre', 'label': "Genre"},
                                        {'name': 'status', 'field': 'status', 'label': "Status"},
@@ -299,13 +303,15 @@ def info_book():
                                        {'name': 'last_name', 'field': 'last_name', 'label': "Author last"},
                                        {'name': 'isbn', 'field': 'isbn', 'label': "ISBN"},
                                        ], rows=[])
+    all_book_info.add_rows(rows)
+    all_book_info.update()
     ratings_rows = get_ratings(selected_book)
-    ratings = ui.table(columns=[{'name': 'isbn', 'field': 'isbn', 'label': "ISBN"},
+    ratings=ui.table(columns=[{'name': 'isbn', 'field': 'isbn', 'label': "ISBN"},
                                       {'name': 'rating', 'field': 'rating', 'label': "Rating"},
                                       {'name': 'review_text', 'field': 'review_text', 'label': "review_text"}
                                       ], rows=[])
-    #all_book_info.add_rows(rows)
-    #all_book_info.update()
+    ratings.add_rows(ratings_rows)
+    ratings.update()
     ui.link("Back to search", '/lookup')
     ui.link("Back to dashboard", '/patron_dashboard')
 
