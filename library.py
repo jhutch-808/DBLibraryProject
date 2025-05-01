@@ -12,8 +12,6 @@ conn = psycopg.connect(f"host=dbclass.rhodescs.org dbname=practice user={DBUSER}
 # Open a cursor to perform database operations
 cur = conn.cursor(row_factory=dict_row)
 
-global user_id
-
 def get_author():
     cur.execute("SELECT First_Name,Last_Name,Publisher,AuthorID FROM Author")
     rows = cur.fetchall()
@@ -113,7 +111,8 @@ def login():
         password = get_password_for_user(username_box.value)
         if password == password_box.value:
             app.storage.user['username'] = username_box.value
-            ui.navigate.to('/patron_dashboard')  # go to where the user wanted to go
+            user_id = app.storage.user.get('username')
+            ui.navigate.to('/patron_dashboard', user)id  # go to where the user wanted to go
         else:
             ui.image('https://media.makeameme.org/created/when-your-login.jpg')
             ui.notify('Wrong username or password', color='negative')
@@ -133,7 +132,8 @@ def staff_login():
         password = get_password_for_staff(username_box.value)
         if password == password_box.value:
             app.storage.user['username'] = username_box.value
-            ui.navigate.to('/staff_dashboard')  # go to where the user wanted to go
+            user_id = user_id = app.storage.user.get('username')
+            ui.navigate.to('/staff_dashboard', user_id)  # go to where the user wanted to go
         else:
             ui.image('https://media.makeameme.org/created/when-your-login.jpg')
             ui.notify('Wrong username or password', color='negative')
@@ -148,14 +148,14 @@ def staff_login():
 
 
 @ui.page('/patron_dashboard')
-def patron_dashboard():
+def patron_dashboard(user_id):
     user_id = app.storage.user.get('username')
 
     ui.label("📖 Welcome to Your Library Dashboard")
 
     # Navigation Links
     with ui.row().classes('gap-4'):
-        ui.link("🔍 Book Lookup", '/lookup')
+        ui.link("🔍 Book Lookup", '/lookup', user_id)
         ui.link("👤 Account Info", '/account')
         ui.link("⭐ Rate a Book", '/rate')
 
@@ -179,8 +179,8 @@ def patron_dashboard():
 
 
 @ui.page('/staff_dashboard')
-def staff_dashboard():
-
+def staff_dashboard(user_id):
+    user_id = app.storage.user.get('username')
     ui.label("📖 Welcome to Your Library Dashboard")
 
     # Navigation Links
@@ -220,12 +220,12 @@ def book_lookup():
                                            {'name': 'genre', 'field': 'genre', 'label': "Genre"},
                                            {'name': 'status', 'field': 'status', 'label': "Status"}],
                                   rows=[], selection='single', on_select=lambda e: click_book(e))
-        ui.button('Hold or checkout book', on_click=lambda: hold_and_checkout_book(selected_book))
-        ui.button('Additional info', on_click=lambda: info_book(selected_book))
+        ui.button('Hold or checkout book', on_click=lambda: hold_and_checkout_book(selected_book, user_id))
+        ui.link('Additional info', '/info_book/{selected_book}')
 
 
         def search():
-            ui.label("Results:")
+            #ui.label("Results:")
             if title.value:
                 book_rows = get_book_with_title(title.value)
 
@@ -235,6 +235,7 @@ def book_lookup():
             if isbn.value:
                 book_rows = get_book_with_isbn(int(isbn.value))
 
+            search_results.clear()
             search_results.add_rows(book_rows)
             search_results.update()
 
@@ -247,21 +248,22 @@ def book_lookup():
             nonlocal selected_book
             selected_book = int(e.selection[0]['isbn'])
 
-def hold_and_checkout_book(selected_book):
+def hold_and_checkout_book(selected_book, user_id):
     dayOut='2025-05-01'
     dayDue='2025-06-01'
     dayReturned=None
     if get_status(selected_book):
-        cur.execute("INSERT INTO Checkout(ISBN,Lib_ID,DayOut,DayDue,DayReturned) VALUES (%d, %d, %s, %s, %s)", [selected_book, user_id, dayOut, dayDue, dayReturned])
+        cur.execute("INSERT INTO Checkout(ISBN,Lib_ID,DayOut,DayDue,DayReturned) VALUES (%s, %s, %s, %s, %s)", [selected_book, user_id, dayOut, dayDue, dayReturned])
         conn.commit()
     if not get_status(selected_book):
-        cur.execute("INSERT INTO Hold(isbn,dayheld,dayholdexpire,dayout,Lib_ID) VALUES (%d, %d, %s, %s, %s)",
+        cur.execute("INSERT INTO Hold(isbn,dayheld,dayholdexpire,dayout,Lib_ID) VALUES (%s, %s, %s, %s, %s)",
                     [selected_book, dayOut, dayDue, dayReturned, user_id])
         conn.commit()
-    patron_dashboard()
+    ui.navigate.to('/patron_dashboard')
 
+@ui.page('/info_book/{selected_book}')
 def info_book(selected_book):
-    rows = cur.execute("SELECT * FROM Author a join Book b on a.AuthorID=b.AuthourID")
+    rows = cur.execute("SELECT * FROM Author a join Book b on a.AuthorID=b.AuthorID WHERE isbn=%s", [selected_book])
     all_book_info = ui.table(columns=[{'name': 'isbn', 'field': 'isbn', 'label': "ISBN"},
                                        {'name': 'title', 'field': 'title', 'label': "Title"},
                                        {'name': 'genre', 'field': 'genre', 'label': "Genre"},
@@ -278,9 +280,3 @@ def info_book(selected_book):
 
 
 ui.run(reload=False, storage_secret='THIS_NEEDS_TO_BE_CHANGED', port = 8081)
-
-
-
-
-
-
