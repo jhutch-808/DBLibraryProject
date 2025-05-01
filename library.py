@@ -280,6 +280,8 @@ def hold_and_checkout_book(selected_book, user_id):
     #if get_status(selected_book):
     cur.execute("INSERT INTO Checkout(ISBN,Lib_ID,DayOut,DayDue,DayReturned) VALUES (%s, %s, %s, %s, %s)", [selected_book, user_id, dayOut, dayDue, dayReturned])
     conn.commit()
+    cur.execute("UPDATE book SET Status=FALSE WHERE isbn=%s", [selected_book])
+    conn.commit()
     #if not get_status(selected_book):
         #cur.execute("INSERT INTO Hold(isbn,dayheld,dayholdexpire,dayout,Lib_ID) VALUES (%s, %s, %s, %s, %s)",
                     #[selected_book, dayOut, dayDue, dayReturned, user_id])
