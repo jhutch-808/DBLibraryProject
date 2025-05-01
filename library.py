@@ -110,8 +110,15 @@ def get_all_books():
     return cur.fetchall()
 
 def add_rating(isbn, rating, review, lib_id):
-    cur.execute("INSERT INTO Rating (isbn, lib_id, rating, review_text) VALUES (%s, %s, %s, %s);",
-        (isbn, lib_id, rating, review))
+    cur.execute(
+        """
+        INSERT INTO Rating (isbn, lib_id, rating, review_text)
+        VALUES (%s, %s, %s, %s)
+        ON CONFLICT (isbn, lib_id)
+        DO UPDATE SET rating = EXCLUDED.rating, review_text = EXCLUDED.review_text;
+        """,
+        (isbn, lib_id, rating, review)
+    )
     conn.commit()
 
 
